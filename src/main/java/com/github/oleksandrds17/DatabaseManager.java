@@ -6,15 +6,14 @@ import java.util.List;
 
 public class DatabaseManager {
 
-    private static final String URL =
-            "jdbc:postgresql://localhost:5432/testdb";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "password";
-
     public static void saveResult(String testName, String result) {
         String sql = "INSERT INTO test_results(test_name, result) VALUES (?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try  (Connection conn = DriverManager.getConnection(
+                DatabaseConfig.URL,
+                DatabaseConfig.USER,
+                DatabaseConfig.PASSWORD
+        );
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, testName);
@@ -31,7 +30,11 @@ public class DatabaseManager {
 
         String sql = "SELECT id, test_name, result, run_time FROM test_results ORDER BY id DESC";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(
+                DatabaseConfig.URL,
+                DatabaseConfig.USER,
+                DatabaseConfig.PASSWORD
+        );
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -54,7 +57,11 @@ public class DatabaseManager {
     public static void clearResults() {
         String sql = "DELETE FROM test_results";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(
+                DatabaseConfig.URL,
+                DatabaseConfig.USER,
+                DatabaseConfig.PASSWORD
+        );
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.executeUpdate();

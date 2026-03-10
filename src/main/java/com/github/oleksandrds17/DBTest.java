@@ -8,9 +8,9 @@ public class DBTest {
     public static void main(String[] args) throws Exception {
 
         Connection conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/testdb",
-                "postgres",
-                "password"
+                DatabaseConfig.URL,
+                DatabaseConfig.USER,
+                DatabaseConfig.PASSWORD
         );
 
         System.out.println("Connected to database!");
